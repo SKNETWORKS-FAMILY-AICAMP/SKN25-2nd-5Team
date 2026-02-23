@@ -21,7 +21,7 @@ def save_memo_to_db(emp_id, content):
         cursor.close()
         #conn.close()
 
-        load_memos_from_db.clear()
+        #load_memos_from_db.clear()
 
         return True
 
@@ -139,7 +139,8 @@ def hr_retention_dashboard():
                     for _, row in history_df.iterrows():
                         with st.chat_message("user", avatar="🏢"):
                             # DB의 created_at 시간을 포맷
-                            st.caption(f"📅 {row['created_at'].strftime('%Y-%m-%d %H:%M')}")
+                            if pd.notnull(row['created_at']):
+                                st.caption(f"📅 {row['created_at'].strftime('%Y-%m-%d %H:%M')}")
                             st.write(row['content'])
                 else:
                     st.info("기록된 메모 이력이 없습니다.")
