@@ -7,6 +7,7 @@ from ui.simulation import render_simulation_page
 from ui.optimization import render_optimization_page
 from ui.infra_page import render_infra_page
 from ui.login_page import render_login_page
+from ui.hr_retention import hr_retention_dashboard
 
 class App:
     def __init__(self):
@@ -49,4 +50,7 @@ class App:
                 render_simulation_page()
             elif page == "Optimization":
                 render_optimization_page()
+            elif page =="HrRetention":
+                hr_retention_dashboard()
+
 
