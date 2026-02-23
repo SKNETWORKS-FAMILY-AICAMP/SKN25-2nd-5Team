@@ -50,12 +50,7 @@ def render_dashboard():
 
     if '예측_퇴사확률' not in df.columns:
         with st.spinner("AI가 전체 임직원의 퇴사 위험도를 분석하고 있습니다..."):
-            probs = []
-            for i in range(len(df)):
-                prob = predictor.predict_single(df.iloc[[i]])
-                probs.append(prob if prob is not None else 0.0)
-
-            df['예측_퇴사확률'] = probs
+            df['예측_퇴사확률'] = predictor.predict_dataframe(df)
             df['위험군'] = df['예측_퇴사확률'].apply(lambda x: '고위험' if x> 0.4 else '안정')
             
     #kpi 지표 계산
@@ -65,7 +60,6 @@ def render_dashboard():
 
     #avg_tenure = df['현회사근속년수'].mean() if '현회사근속년수' in df.columns else (df['YearsAtCompany'].mean() if 'YearsAtCompany' in df.columns else 0)
     #avg_income = df['월급'].mean() if '월급' in df.columns else (df['MonthlyIncome'].mean() if 'MonthlyIncome' in df.columns else 0)
-
 
 
     avg_tenure_col = '현회사근속년수' if '현회사근속년수' in df.columns else ('YearsAtCompany' if 'YearsAtCompany' in df.columns else ('years_at_company' if 'years_at_company' in df.columns else None))
@@ -116,33 +110,8 @@ def render_dashboard():
         if 'shap_fig' not in st.session_state:
             with st.spinner("전체 데이터 SHAP 요인 분석 중..."):
                 try:
-                    df_processed = df.copy()
-                    if '퇴사여부' in df_processed.columns:
-                        df_processed = df_processed.drop('퇴사여부', axis=1)
-                    if '초과근무여부' in df_processed.columns:
-                        df_processed['초과근무여부'] = df_processed['초과근무여부'].map({'Yes': 1, 'No': 0})
-                    if '성별' in df_processed.columns:
-                        df_processed['성별'] = df_processed['성별'].map({'Male': 1, 'Female': 0})
-                    df_processed = pd.get_dummies(df_processed)
-
-                    final_features = pd.DataFrame(columns=predictor.feature_name)
-                    for col in predictor.feature_name:
-                        final_features[col] = df_processed[col].values
-                    else:
-                        final_features[col] = 0
+                    shap_df = predictor.get_global_shap(df)
                     
-                    explainer = shap.TreeExplainer(predictor.model)
-                    shap_values = explainer.shap_values(final_features)
-
-                    if isinstance(shap_values, list):
-                        shap_values = shap_values[1]
-                    mean_abs_shap = np.abs(shap_values).mean(axis=0)
-
-                    shap_df = pd.DataFrame({
-                        '요인 (Feature)': final_features.columns,
-                        '중요도 (Impact)': mean_abs_shap
-                    }).sort_values(by='중요도 (Impact)', ascending=True).tail(10) 
-
                     fig = px.bar(
                         shap_df, 
                         x='중요도 (Impact)', 

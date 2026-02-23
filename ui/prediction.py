@@ -113,7 +113,7 @@ def render_prediction_page():
         predictor = AttritionPredictor()
 
         with st.spinner("AI가 데이터를 분석하고 있습니다..."):
-
+                
             # 예측
             prob = predictor.predict_single(selected_row)
 
