@@ -23,8 +23,7 @@ env/
 .DS_Store
 
 # Model files (용량 클 경우)
-*.pkl
-*.joblib
+
 
 # Logs
 *.log
