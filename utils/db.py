@@ -6,8 +6,7 @@ import MySQLdb
 # pymysql.install_as_MySQLdb()
 
 
-#@st.cache_resource
-#connection 끊김으로 주석처리
+@st.cache_resource
 def get_db():
     return MySQLdb.connect(
         #host='175.196.76.209',

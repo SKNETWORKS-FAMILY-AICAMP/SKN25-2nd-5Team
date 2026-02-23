@@ -37,6 +37,7 @@ def render_sidebar():
         "Prediction": "menu_prediction",
         "Simulation": "menu_simulation",
         "Optimization": "menu_optimization",
+        "피트니스 데이터 분석": "menu_infra",
         "HrRetention": "menu_hr_retention"
     }
     # -----상단: 사용자 정보 및 로그아웃-----

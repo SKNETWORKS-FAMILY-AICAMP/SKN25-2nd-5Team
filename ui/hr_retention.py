@@ -21,6 +21,8 @@ def save_memo_to_db(emp_id, content):
         cursor.close()
         conn.close()
 
+        load_memos_from_db.clear()
+
         return True
 
     except Exception as e:
@@ -28,6 +30,7 @@ def save_memo_to_db(emp_id, content):
         st.error(f"❌ 메모 저장 오류: {e}")
         return False
 
+@st.cache_data
 def load_memos_from_db(emp_id):
     try:
         conn = get_db()
@@ -135,7 +138,7 @@ def hr_retention_dashboard():
                 if not history_df.empty:
                     for _, row in history_df.iterrows():
                         with st.chat_message("user", avatar="🏢"):
-                            # DB의 created_at 시간을 포맷팅
+                            # DB의 created_at 시간을 포맷
                             st.caption(f"📅 {row['created_at'].strftime('%Y-%m-%d %H:%M')}")
                             st.write(row['content'])
                 else:
