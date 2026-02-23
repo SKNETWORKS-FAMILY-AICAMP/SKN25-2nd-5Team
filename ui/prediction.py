@@ -11,9 +11,10 @@ def render_prediction_page():
     sample_file_path = r"C:\Users\playdata2\Downloads\archive\HR_Analytics.csv" # 
     if os.path.exists(sample_file_path):
         with open(sample_file_path, "rb") as file:
+            csv_data = file.read()
             st.download_button(
                 label="📄 샘플 인사데이터 양식 다운로드",
-                data=file,
+                data=csv_data,
                 file_name="HR_sample_template.csv",
                 mime="text/csv"
             )
@@ -24,7 +25,11 @@ def render_prediction_page():
     uploaded_file = st.file_uploader("인사 데이터 (CSV) 파일을 업로드하세요", type=['csv'])
     
     if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
+        try:
+            df = pd.read_csv(uploaded_file)
+        except Exception as e:
+            st.error(f"파일을 읽는 중 오류 발생:{e}")
+            #df = None
 
         is_vaild, message = validate_uploaded_data(df)
 
@@ -46,19 +51,29 @@ def render_prediction_page():
     if 'employee_data' in st.session_state:
         df = st.session_state['employee_data']
         
-        # 임시로 사번(EmployeeNumber) 리스트를 만든다고 가정 (실제 데이터에 맞게 수정 필요)
-        if 'EmpID' in df.columns:
-            emp_list = df['EmpID'].tolist()
-        else:
-            emp_list = df.index.tolist()
+        # 사번 선택 박스 로직
+        emp_list = df.index.tolist()
+        selected_emp_idx = st.selectbox("분석할 직원을 선택하세요(데이터 행 번호)",emp_list)
 
-        selected_emp = st.selectbox("분석할 직원을 선택하세요 (사번)", emp_list)
-        
         if st.button("AI 분석 실행", type="primary"):
-            st.markdown(f"**직원 {selected_emp} 분석 결과**")
-            
-            # TODO: core.predictor에서 예측값 가져오기
-            st.warning("⚠️ 여기에 AI 모델이 예측한 퇴사 확률 (예: 85%) 이 메트릭으로 뜹니다.")
-            
-            # TODO: core.explainer에서 SHAP 워터폴 차트 가져오기
-            st.info("💡 여기에 SHAP Waterfall 차트가 뜹니다. (예: 야근 때문에 +20%, 월급이 낮아서 +10% 등 원인 설명)")
+            st.markdown(f"**선택된 직원(Index: {selected_emp_idx}) 분석 결과**")
+
+            from core.predictor import AttritionPredictor
+            predictor = AttritionPredictor()
+
+            emp_row = df.loc[[selected_emp_idx]]
+
+            with st.spinner("AI가 데이터를 분석하고 있습니다..."):
+                prob = predictor.predict_single(emp_row)
+
+            if prob is not None:
+                if prob > 0.4:
+                    st.metric(label="AI 예측 퇴사 확률", value=f"{prob * 100:.1f} %", delta="🚨 퇴사 고위험군 (주의)", delta_color="inverse")
+                    st.error("이 직원은 퇴사할 확률이 높습니다. 원인 분석 및 면담이 필요합니다.")
+                else:
+                    st.metric(label="AI 예측 퇴사 확률", value=f"{prob * 100:.1f} %", delta="✅ 안정적", delta_color="normal")
+                    st.success("안정적인 상태입니다.")
+
+                    st.info("💡 [다음 스텝] 여기에 이 직원이 '왜' 이런 확률이 나왔는지 이유를 설명하는 SHAP 그래프가 들어갈 자리입니다.")
+            else:
+                st.error("🚨 모델 파일을 찾을 수 없거나 에러가 발생했습니다.")

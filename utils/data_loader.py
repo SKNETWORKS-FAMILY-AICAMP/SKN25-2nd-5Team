@@ -1,7 +1,7 @@
 
 
 def validate_uploaded_data(df):
-    required_columns = ['Age', 'Attrition', 'BusinessTravel', 'DailyRate', 'Department'] # 필수 컬럼 일부
+    required_columns = ['나이','출장빈도'] # 필수 컬럼 일부
     
     # 1. 컬럼이 다 있는지 확인
     missing_cols = [col for col in required_columns if col not in df.columns]
