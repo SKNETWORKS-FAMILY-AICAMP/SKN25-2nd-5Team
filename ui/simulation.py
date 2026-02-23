@@ -1,8 +1,16 @@
 import streamlit as st
 import pandas as pd
+
 from core.predictor import AttritionPredictor
+from core.simulator import calculate_best, calculate_single
 from utils.employee_repo import get_user_employees
 from utils.db import get_db
+from utils.column_mapper import ENG_TO_KOR
+
+
+@st.cache_resource
+def load_predictor():
+    return AttritionPredictor()
 
 
 def render_simulation_page():
@@ -20,9 +28,8 @@ def render_simulation_page():
         return
 
     # 직원 선택
-
     selected_emp_id = st.selectbox(
-    "시뮬레이션 대상 직원",
+        "시뮬레이션 대상 직원",
         df["emp_id"],
         format_func=lambda x: df[df["emp_id"] == x]["name"].values[0]
     )
@@ -32,39 +39,10 @@ def render_simulation_page():
 
     model_input = selected_row.drop(columns=["emp_id", "user_id"])
 
-    # 영어 → 한국어 (모델 기준)
-    reverse_mapping = {
-        "name": "이름",
-        "age": "나이",
-        "business_travel": "출장빈도",
-        "department": "부서",
-        "distance_from_home": "집과의거리",
-        "education": "교육수준",
-        "education_field": "전공분야",
-        "environment_satisfaction": "근무환경만족도",
-        "gender": "성별",
-        "job_involvement": "직무몰입도",
-        "job_level": "직급",
-        "job_satisfaction": "직무만족도",
-        "marital_status": "결혼상태",
-        "monthly_income": "월급",
-        "num_companies_worked": "이전회사근무횟수",
-        "overtime": "초과근무여부",
-        "percent_salary_hike": "급여인상률",
-        "performance_rating": "성과평가등급",
-        "relationship_satisfaction": "대인관계만족도",
-        "total_working_years": "총경력년수",
-        "work_life_balance": "워라밸수준",
-        "years_at_company": "현회사근속년수",
-        "years_in_current_role": "현재직무근무년수",
-        "years_since_last_promotion": "마지막승진후경과년수",
-        "job_role": "직무분류"
-    }
+    # 영어 → 한국어
+    model_input = model_input.rename(columns=ENG_TO_KOR)
 
-    model_input = model_input.rename(columns=reverse_mapping)
-
-    predictor = AttritionPredictor()
-
+    predictor = load_predictor()
 
     # 현재 확률
     current_prob = predictor.predict_single(model_input)
@@ -77,8 +55,7 @@ def render_simulation_page():
 
     st.divider()
 
-    # 직원 바뀌면 Best 재계산
-
+    # 직원 변경 시 Best 재계산
     if (
         "last_emp_id" not in st.session_state
         or st.session_state["last_emp_id"] != emp_id
@@ -86,39 +63,7 @@ def render_simulation_page():
 
         st.session_state["last_emp_id"] = emp_id
 
-        best_prob = current_prob
-        best_config = {
-            "salary": 0,
-            "promote": False,
-            "remove_overtime": False
-        }
-
-        salary_options = [0, 5, 10, 15, 20, 25, 30]
-
-        for salary in salary_options:
-            for promote_option in [False, True]:
-                for overtime_option in [False, True]:
-
-                    simulated = model_input.copy()
-
-                    simulated["월급"] *= (1 + salary / 100)
-
-                    if promote_option:
-                        simulated["직급"] += 1
-
-                    if overtime_option:
-                        simulated["초과근무여부"] = "No"
-
-                    prob = predictor.predict_single(simulated)
-
-                    # 확률 최소화 기준
-                    if prob < best_prob:
-                        best_prob = prob
-                        best_config = {
-                            "salary": salary,
-                            "promote": promote_option,
-                            "remove_overtime": overtime_option
-                        }
+        best_config, best_prob = calculate_best(model_input, predictor)
 
         st.session_state["best_salary"] = best_config["salary"]
         st.session_state["best_promote"] = best_config["promote"]
@@ -174,17 +119,14 @@ def render_simulation_page():
 
     if st.button("시뮬레이션 실행", type="primary"):
 
-        simulated = model_input.copy()
+        new_prob = calculate_single(
+            model_input,
+            predictor,
+            salary_hike,
+            promote,
+            remove_overtime
+        )
 
-        simulated["월급"] *= (1 + salary_hike / 100)
-
-        if promote:
-            simulated["직급"] += 1
-
-        if remove_overtime:
-            simulated["초과근무여부"] = "No"
-
-        new_prob = predictor.predict_single(simulated)
         delta_value = (new_prob - current_prob) * 100
 
         st.success("시뮬레이션 완료!")
