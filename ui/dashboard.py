@@ -111,35 +111,6 @@ def render_dashboard():
             with st.spinner("전체 데이터 SHAP 요인 분석 중..."):
                 try:
                     shap_df = predictor.get_global_shap(df)
-                    '''
-                    df_processed = df.copy()
-                    if '퇴사여부' in df_processed.columns:
-                        df_processed = df_processed.drop('퇴사여부', axis=1)
-                    if '초과근무여부' in df_processed.columns:
-                        df_processed['초과근무여부'] = df_processed['초과근무여부'].map({'Yes': 1, 'No': 0})
-                    if '성별' in df_processed.columns:
-                        df_processed['성별'] = df_processed['성별'].map({'Male': 1, 'Female': 0})
-                    df_processed = pd.get_dummies(df_processed)
-
-                    final_features = pd.DataFrame(columns=predictor.feature_name)
-                    for col in predictor.feature_name:
-                        if col in df_processed.columns:
-                            final_features[col] = df_processed[col].values
-                        else:
-                            final_features[col] = 0
-                    
-                    explainer = shap.TreeExplainer(predictor.model)
-                    shap_values = explainer.shap_values(final_features)
-
-                    if isinstance(shap_values, list):
-                        shap_values = shap_values[1]
-                    mean_abs_shap = np.abs(shap_values).mean(axis=0)
-
-                    shap_df = pd.DataFrame({
-                        '요인 (Feature)': final_features.columns,
-                        '중요도 (Impact)': mean_abs_shap
-                    }).sort_values(by='중요도 (Impact)', ascending=True).tail(10) 
-                    '''
                     
                     fig = px.bar(
                         shap_df, 
