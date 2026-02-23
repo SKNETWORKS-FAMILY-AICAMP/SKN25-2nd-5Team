@@ -19,7 +19,7 @@ def save_memo_to_db(emp_id, content):
         conn.commit()
 
         cursor.close()
-        conn.close()
+        #conn.close()
 
         load_memos_from_db.clear()
 
@@ -30,7 +30,7 @@ def save_memo_to_db(emp_id, content):
         st.error(f"❌ 메모 저장 오류: {e}")
         return False
 
-@st.cache_data
+#@st.cache_data
 def load_memos_from_db(emp_id):
     try:
         conn = get_db()
@@ -42,7 +42,7 @@ def load_memos_from_db(emp_id):
         ORDER BY created_at DESC
         """
         memos_df = pd.read_sql(query, conn, params=(emp_id,))
-        conn.close()
+        #conn.close()
         return memos_df
     except Exception as e:
         st.error(f"❌ 메모 로드 오류: {e}")
@@ -57,7 +57,7 @@ def hr_retention_dashboard():
             conn = get_db()
             query = "SELECT * FROM employees"
             df = pd.read_sql(query, conn)
-            conn.close()
+            #conn.close()
             
             if 'attrition' in df.columns:
                 df['Attrition_Prob'] = df['attrition'].apply(

@@ -60,7 +60,7 @@ def render_prediction_page():
         is_valid, message = validate_uploaded_data(df)
 
         if is_valid:
-            
+
             conn = get_db()
 
             # 로그인 연결
@@ -175,42 +175,8 @@ def render_prediction_page():
             if prob is None:
                 st.error("모델 예측 중 오류 발생")
                 return
-
-            # SHAP 계산용 (predictor 내부와 동일 처리)
-            df_processed = selected_row.copy()
-
-            if '퇴사여부' in df_processed.columns:
-                df_processed = df_processed.drop('퇴사여부', axis=1)
-
-            if '초과근무여부' in df_processed.columns:
-                df_processed['초과근무여부'] = df_processed['초과근무여부'].map({'Yes': 1, 'No': 0})
-
-            if '성별' in df_processed.columns:
-                df_processed['성별'] = df_processed['성별'].map({'Male': 1, 'Female': 0})
-
-            df_processed = pd.get_dummies(df_processed)
-
-            final_features = pd.DataFrame(columns=predictor.feature_name)
-
-            for col in predictor.feature_name:
-                if col in df_processed.columns:
-                    final_features[col] = df_processed[col].values
-                else:
-                    final_features[col] = 0
-
-            explainer = shap.TreeExplainer(predictor.model)
-            shap_values = explainer.shap_values(final_features)
-
-            if isinstance(shap_values, list):
-                shap_values = shap_values[1]
-
-            person_shap = shap_values[0]
-
-            shap_df = pd.DataFrame({
-                'Feature': final_features.columns,
-                'SHAP Value': person_shap
-            }).sort_values(by='SHAP Value', key=abs, ascending=True).tail(10)
-
+            
+            shap_df = predictor.get_shap_values(selected_row)
     
         # 결과 출력
         st.metric(
