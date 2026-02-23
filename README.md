@@ -7,7 +7,7 @@
 
 ##  프로젝트 개요
 
-프로젝트: 데이터 기반 선제적 인재 유지 솔루션 (Data-Driven Proactive Retention Solution)
+프로젝트: 데이터 기반 선제적 인재 유지 솔루션
 
 프로젝트 성격: 머신러닝(ML) 기반의 퇴사 예측 알고리즘과 최적화 시뮬레이션을 결합한 기업용 HR SaaS 프로그램입니다. 단순히 퇴사 가능성을 점치는 것을 넘어, 인사 운영의 효율성을 극대화하기 위한 구체적인 액션 아이템(Action Item)을 제시합니다.
 
@@ -101,6 +101,7 @@ HR_Analytics_SaaS/
 ├── [db.py](http://db.py/)              # DB 연결 (필요 시)
 └── data_loader.py     # CSV 파일 처리, 전처리 함수
 ```
+
 
 
 
