@@ -7,6 +7,7 @@ import plotly.express as px
 from utils.data_loader import validate_uploaded_data
 from utils.db import get_db
 from utils.employee_repo import insert_employee, get_user_employees
+from utils.column_mapper import KOR_TO_ENG, ENG_TO_KOR
 
 
 def render_prediction_page():
@@ -27,35 +28,7 @@ def render_prediction_page():
             st.error(f"파일을 읽는 중 오류 발생:{e}")
             df = None
 
-        column_mapping = {
-            "이름": "name",
-            "나이": "age",
-            "출장빈도": "business_travel",
-            "부서": "department",
-            "집과의거리": "distance_from_home",
-            "교육수준": "education",
-            "전공분야": "education_field",
-            "근무환경만족도": "environment_satisfaction",
-            "성별": "gender",
-            "직무몰입도": "job_involvement",
-            "직급": "job_level",
-            "직무만족도": "job_satisfaction",
-            "결혼상태": "marital_status",
-            "월급": "monthly_income",
-            "이전회사근무횟수": "num_companies_worked",
-            "초과근무여부": "overtime",
-            "급여인상률": "percent_salary_hike",
-            "성과평가등급": "performance_rating",
-            "대인관계만족도": "relationship_satisfaction",
-            "총경력년수": "total_working_years",
-            "워라밸수준": "work_life_balance",
-            "현회사근속년수": "years_at_company",
-            "현재직무근무년수": "years_in_current_role",
-            "마지막승진후경과년수": "years_since_last_promotion",
-            "직무분류": "job_role"
-        }
-
-        df.rename(columns=column_mapping, inplace=True)
+        df = df.rename(columns=KOR_TO_ENG)
 
         is_valid, message = validate_uploaded_data(df)
 
@@ -133,36 +106,8 @@ def render_prediction_page():
 
         selected_row = selected_row.iloc[[0]]
 
-        # 영어 → 한국어 (모델이 한국어 기준이므로 필요)
-        reverse_mapping = {
-            "name": "이름",
-            "age": "나이",
-            "business_travel": "출장빈도",
-            "department": "부서",
-            "distance_from_home": "집과의거리",
-            "education": "교육수준",
-            "education_field": "전공분야",
-            "environment_satisfaction": "근무환경만족도",
-            "gender": "성별",
-            "job_involvement": "직무몰입도",
-            "job_level": "직급",
-            "job_satisfaction": "직무만족도",
-            "marital_status": "결혼상태",
-            "monthly_income": "월급",
-            "num_companies_worked": "이전회사근무횟수",
-            "overtime": "초과근무여부",
-            "percent_salary_hike": "급여인상률",
-            "performance_rating": "성과평가등급",
-            "relationship_satisfaction": "대인관계만족도",
-            "total_working_years": "총경력년수",
-            "work_life_balance": "워라밸수준",
-            "years_at_company": "현회사근속년수",
-            "years_in_current_role": "현재직무근무년수",
-            "years_since_last_promotion": "마지막승진후경과년수",
-            "job_role": "직무분류"
-        }
-
-        selected_row = selected_row.rename(columns=reverse_mapping)
+        # 영어 → 한국어 
+        selected_row = selected_row.rename(columns=ENG_TO_KOR)
 
         from core.predictor import AttritionPredictor
         predictor = AttritionPredictor()
