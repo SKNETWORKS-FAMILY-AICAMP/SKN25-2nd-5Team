@@ -18,6 +18,7 @@ def render_login_page(conn):
                 st.success(f"환영합니다, {username}님!")
                 st.session_state['is_logged_in'] = True
                 st.session_state['username'] = username
+                st.session_state["user_id"] = user[0]
                 sleep(0.5)
                 st.rerun()
             else:

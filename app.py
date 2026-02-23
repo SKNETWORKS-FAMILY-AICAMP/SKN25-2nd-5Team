@@ -3,6 +3,7 @@ from utils.db import get_db
 from ui.sidebar import render_sidebar
 from ui.dashboard import render_dashboard
 from ui.prediction import render_prediction_page
+from ui.management import render_management
 from ui.simulation import render_simulation_page
 from ui.optimization import render_optimization_page
 from ui.infra_page import render_infra_page
@@ -46,6 +47,8 @@ class App:
                 render_dashboard()
             elif page == "Prediction":
                 render_prediction_page()
+            elif page == "Employee 관리":
+                render_management()
             elif page == "Simulation":
                 render_simulation_page()
             elif page == "Optimization":

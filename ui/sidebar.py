@@ -35,6 +35,7 @@ def render_sidebar():
     pages = {
         "Dashboard": "menu_dashboard",
         "Prediction": "menu_prediction",
+        "Employee 관리": "menu_employee",
         "Simulation": "menu_simulation",
         "Optimization": "menu_optimization",
         "피트니스 데이터 분석": "menu_infra",

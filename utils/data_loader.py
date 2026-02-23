@@ -1,8 +1,19 @@
 
 
 def validate_uploaded_data(df):
-    required_columns = ['나이','출장빈도'] # 필수 컬럼 일부
-    
+    required_columns = [
+    "name", "age", "business_travel", "department",
+    "distance_from_home", "education", "education_field",
+    "environment_satisfaction", "gender", "job_involvement",
+    "job_level", "job_satisfaction", "marital_status",
+    "monthly_income", "num_companies_worked", "overtime",
+    "percent_salary_hike", "performance_rating",
+    "relationship_satisfaction", "total_working_years",
+    "work_life_balance", "years_at_company",
+    "years_in_current_role", "years_since_last_promotion",
+    "job_role"
+] 
+
     # 1. 컬럼이 다 있는지 확인
     missing_cols = [col for col in required_columns if col not in df.columns]
     if missing_cols:
