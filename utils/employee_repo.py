@@ -26,3 +26,13 @@ def insert_employee(conn, values):
 
     cursor.execute(query, values)
     conn.commit()
+
+def update_attrition(conn, emp_id, prob):
+    cursor = conn.cursor()
+    query = """
+        UPDATE employees
+        SET attrition = %s
+        WHERE emp_id = %s
+    """
+    cursor.execute(query, (prob, emp_id))
+    conn.commit()
