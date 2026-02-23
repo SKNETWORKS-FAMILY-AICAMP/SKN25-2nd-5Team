@@ -3,9 +3,10 @@ import pandas as pd
 from core.predictor import AttritionPredictor
 import numpy as np
 import shap
-import matplotlib.pyplot as plt
 import plotly.express as px
 
+from utils.db import get_db
+from utils.employee_repo import get_user_employees
 
 def render_dashboard():
     st.title("📊 HR Analytics Dashboard")
@@ -13,11 +14,38 @@ def render_dashboard():
 
     st.divider()
 
-    if 'employee_data' not in st.session_state:
-        st.warning("데이터가 로드되지 않았습니다. 데이터를 먼저 업로드 해 주세요")
+    if 'user_id' not in st.session_state:
+        st.warning("로그인이 필요합니다. 먼저 로그인을 해주세요.")
         return
     
-    df = st.session_state['employee_data'].copy()
+    user_id = st.session_state['user_id']
+
+    try:
+        conn = get_db()
+        df = get_user_employees(conn, user_id)
+    except Exception as e:
+        st.error(f"데이터베이스 연결 또는 데이터 로드 중 오류 발생: {e}")
+        return
+    
+    if df.empty:
+        st.info("현재 등록된 직원 데이터가 없습니다. Prediction 페이지에서 데이터를 업로드 해주세요.")
+        return
+    
+    reverse_mapping = {
+        "name": "이름", "age": "나이", "business_travel": "출장빈도", "department": "부서",
+        "distance_from_home": "집과의거리", "education": "교육수준", "education_field": "전공분야",
+        "environment_satisfaction": "근무환경만족도", "gender": "성별", "job_involvement": "직무몰입도",
+        "job_level": "직급", "job_satisfaction": "직무만족도", "marital_status": "결혼상태",
+        "monthly_income": "월급", "num_companies_worked": "이전회사근무횟수", "overtime": "초과근무여부",
+        "percent_salary_hike": "급여인상률", "performance_rating": "성과평가등급",
+        "relationship_satisfaction": "대인관계만족도", "total_working_years": "총경력년수",
+        "work_life_balance": "워라밸수준", "years_at_company": "현회사근속년수",
+        "years_in_current_role": "현재직무근무년수", "years_since_last_promotion": "마지막승진후경과년수",
+        "job_role": "직무분류"
+    }
+
+    df = df.rename(columns=reverse_mapping)
+
     predictor = AttritionPredictor()
 
     if '예측_퇴사확률' not in df.columns:
@@ -29,14 +57,23 @@ def render_dashboard():
 
             df['예측_퇴사확률'] = probs
             df['위험군'] = df['예측_퇴사확률'].apply(lambda x: '고위험' if x> 0.4 else '안정')
-            st.session_state['employee_data'] = df 
+            
     #kpi 지표 계산
     total_emp = len(df)
     high_risk_emp = len(df[df['위험군'] == '고위험'])
     predicted_attrition_rate = (high_risk_emp / total_emp * 100) if total_emp > 0 else 0
 
-    avg_tenure = df['현회사근속년수'].mean() if '현회사근속년수' in df.columns else (df['YearsAtCompany'].mean() if 'YearsAtCompany' in df.columns else 0)
-    avg_income = df['월급'].mean() if '월급' in df.columns else (df['MonthlyIncome'].mean() if 'MonthlyIncome' in df.columns else 0)
+    #avg_tenure = df['현회사근속년수'].mean() if '현회사근속년수' in df.columns else (df['YearsAtCompany'].mean() if 'YearsAtCompany' in df.columns else 0)
+    #avg_income = df['월급'].mean() if '월급' in df.columns else (df['MonthlyIncome'].mean() if 'MonthlyIncome' in df.columns else 0)
+
+
+
+    avg_tenure_col = '현회사근속년수' if '현회사근속년수' in df.columns else ('YearsAtCompany' if 'YearsAtCompany' in df.columns else ('years_at_company' if 'years_at_company' in df.columns else None))
+    avg_income_col = '월급' if '월급' in df.columns else ('MonthlyIncome' if 'MonthlyIncome' in df.columns else ('monthly_income' if 'monthly_income' in df.columns else None))
+
+    avg_tenure = df[avg_tenure_col].mean() if avg_tenure_col else 0
+    avg_income = df[avg_income_col].mean() if avg_income_col else 0
+
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:

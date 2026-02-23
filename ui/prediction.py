@@ -16,14 +16,16 @@ def render_prediction_page():
 
   
     # 1️. CSV 데이터 업로드 
- 
     st.subheader("1. 데이터 업로드")
-
     uploaded_file = st.file_uploader("인사 데이터 (CSV) 파일을 업로드하세요", type=['csv'])
 
     if uploaded_file is not None:
 
-        df = pd.read_csv(uploaded_file, encoding="utf-8-sig")
+        try:
+            df = pd.read_csv(uploaded_file)
+        except Exception as e:
+            st.error(f"파일을 읽는 중 오류 발생:{e}")
+            df = None
 
         column_mapping = {
             "이름": "name",
@@ -58,7 +60,7 @@ def render_prediction_page():
         is_valid, message = validate_uploaded_data(df)
 
         if is_valid:
-
+            
             conn = get_db()
 
             # 로그인 연결
