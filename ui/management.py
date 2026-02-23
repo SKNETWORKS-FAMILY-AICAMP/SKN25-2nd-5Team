@@ -1,6 +1,11 @@
 import streamlit as st
 import pandas as pd
+
+from core.predictor import AttritionPredictor
 from utils.db import get_db
+from utils.employee_repo import get_user_employees,insert_employee, update_employee, update_attrition
+from utils.column_mapper import ENG_TO_KOR   
+
 
 
 def render_management():
@@ -9,11 +14,10 @@ def render_management():
     st.markdown("직원 데이터를 추가하고 관리합니다.")
 
 
-    #if "user_id" not in st.session_state:
-    #    st.warning("로그인이 필요합니다.")
+    # 로그인 체크
     if "user_id" not in st.session_state:
-        st.session_state["user_id"] = 1  # 테스트용 유저
-        #return
+        st.warning("로그인이 필요합니다.")
+        return
 
     conn = get_db()
     user_id = st.session_state["user_id"]
@@ -107,26 +111,14 @@ def render_management():
 
             submitted = st.form_submit_button("💾 저장")
 
+            # 저장 완료 메세지 
+            if st.session_state.get("add_success"):
+                st.success("직원 정보가 저장되었습니다.")
+                del st.session_state["add_success"]
+
         # 저장 로직
         if submitted:
             try:
-                cursor = conn.cursor()
-                query = """
-                INSERT INTO employees (
-                    user_id, name, age, business_travel, department,
-                    distance_from_home, education, education_field,
-                    environment_satisfaction, gender, job_involvement,
-                    job_level, job_satisfaction, marital_status,
-                    monthly_income, num_companies_worked, overtime,
-                    percent_salary_hike, performance_rating,
-                    relationship_satisfaction, total_working_years,
-                    work_life_balance, years_at_company,
-                    years_in_current_role, years_since_last_promotion,
-                    job_role
-                )
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                """
-
                 values = (
                     user_id, name, age, business_travel, department,
                     distance_from_home, education, education_field,
@@ -140,13 +132,50 @@ def render_management():
                     job_role
                 )
 
-                cursor.execute(query, values)
-                conn.commit()
+                emp_id = insert_employee(conn, values)
 
-                st.success("직원 정보가 저장되었습니다.")
+                # 자동 예측 추가
+                predictor = AttritionPredictor()
+
+                row_df = pd.DataFrame([{
+                    "name": name,
+                    "age": age,
+                    "business_travel": business_travel,
+                    "department": department,
+                    "distance_from_home": distance_from_home,
+                    "education": education,
+                    "education_field": education_field,
+                    "environment_satisfaction": environment_satisfaction,
+                    "gender": gender,
+                    "job_involvement": job_involvement,
+                    "job_level": job_level,
+                    "job_satisfaction": job_satisfaction,
+                    "marital_status": marital_status,
+                    "monthly_income": monthly_income,
+                    "num_companies_worked": num_companies_worked,
+                    "overtime": overtime,
+                    "percent_salary_hike": percent_salary_hike,
+                    "performance_rating": performance_rating,
+                    "relationship_satisfaction": relationship_satisfaction,
+                    "total_working_years": total_working_years,
+                    "work_life_balance": work_life_balance,
+                    "years_at_company": years_at_company,
+                    "years_in_current_role": years_in_current_role,
+                    "years_since_last_promotion": years_since_last_promotion,
+                    "job_role": job_role
+                }])
+
+                row_df = row_df.rename(columns=ENG_TO_KOR)
+
+                prob = predictor.predict_single(row_df)
+
+                if prob is not None:
+                    update_attrition(conn, emp_id, float(prob))
+
+                st.session_state["add_success"] = True
+                st.rerun()
 
             except Exception as e:
-                conn.rollback()
                 st.error(f"저장 오류: {e}")
 
   
@@ -154,17 +183,19 @@ def render_management():
 
     with tab2:
 
-        query = "SELECT * FROM employees WHERE user_id = %s"
-        df = pd.read_sql(query, conn, params=(user_id,))
+        df = get_user_employees(conn, user_id)
 
         if df.empty:
             st.info("등록된 직원이 없습니다.")
             return
 
-        selected_name = st.selectbox("수정할 직원 선택", df["name"])
-        selected_row = df[df["name"] == selected_name].iloc[0]
+        selected_emp_id = st.selectbox(
+            "수정할 직원 선택",
+            df["emp_id"],
+            format_func=lambda x: f"{x} - {df[df['emp_id']==x]['name'].values[0]}"
+        )
 
-        st.divider()
+        selected_row = df[df["emp_id"] == selected_emp_id].iloc[0]
 
         with st.form("edit_form"):
 
@@ -263,41 +294,70 @@ def render_management():
                 num_companies_worked = st.number_input("이전 근무 회사 수",
                                                     value=int(selected_row["num_companies_worked"]))
 
-            submitted_edit = st.form_submit_button("수정 저장")
+            submitted_edit = st.form_submit_button("💾 수정")
+
+            # 수정 성공 메세지
+            if st.session_state.get("edit_success"):
+                st.success("직원 정보가 수정되었습니다.")
+                del st.session_state["edit_success"]
 
         # 저장로직 
         if submitted_edit:
-            cursor = conn.cursor()
+            try:
+                values = (
+                    name, age, business_travel, department,
+                    distance_from_home, education, education_field,
+                    environment_satisfaction, gender, job_involvement,
+                    job_level, job_satisfaction, marital_status,
+                    monthly_income, num_companies_worked, overtime,
+                    percent_salary_hike, performance_rating,
+                    relationship_satisfaction, total_working_years,
+                    work_life_balance, years_at_company,
+                    years_in_current_role, years_since_last_promotion,
+                    job_role
+                )
 
-            update_query = """
-            UPDATE employees
-            SET name=%s, age=%s, business_travel=%s, department=%s,
-                distance_from_home=%s, education=%s, education_field=%s,
-                environment_satisfaction=%s, gender=%s, job_involvement=%s,
-                job_level=%s, job_satisfaction=%s, marital_status=%s,
-                monthly_income=%s, num_companies_worked=%s, overtime=%s,
-                percent_salary_hike=%s, performance_rating=%s,
-                relationship_satisfaction=%s, total_working_years=%s,
-                work_life_balance=%s, years_at_company=%s,
-                years_in_current_role=%s, years_since_last_promotion=%s,
-                job_role=%s
-            WHERE emp_id=%s
-            """
+                update_employee(conn, selected_emp_id, values)
 
-            cursor.execute(update_query, (
-                name, age, business_travel, department,
-                distance_from_home, education, education_field,
-                environment_satisfaction, gender, job_involvement,
-                job_level, job_satisfaction, marital_status,
-                monthly_income, num_companies_worked, overtime,
-                percent_salary_hike, performance_rating,
-                relationship_satisfaction, total_working_years,
-                work_life_balance, years_at_company,
-                years_in_current_role, years_since_last_promotion,
-                job_role,
-                selected_row["emp_id"]
-            ))
+                predictor = AttritionPredictor()
 
-            conn.commit()
-            st.success("수정 완료!")
-            st.rerun()
+                row_df = pd.DataFrame([{
+                    "name": name,
+                    "age": age,
+                    "business_travel": business_travel,
+                    "department": department,
+                    "distance_from_home": distance_from_home,
+                    "education": education,
+                    "education_field": education_field,
+                    "environment_satisfaction": environment_satisfaction,
+                    "gender": gender,
+                    "job_involvement": job_involvement,
+                    "job_level": job_level,
+                    "job_satisfaction": job_satisfaction,
+                    "marital_status": marital_status,
+                    "monthly_income": monthly_income,
+                    "num_companies_worked": num_companies_worked,
+                    "overtime": overtime,
+                    "percent_salary_hike": percent_salary_hike,
+                    "performance_rating": performance_rating,
+                    "relationship_satisfaction": relationship_satisfaction,
+                    "total_working_years": total_working_years,
+                    "work_life_balance": work_life_balance,
+                    "years_at_company": years_at_company,
+                    "years_in_current_role": years_in_current_role,
+                    "years_since_last_promotion": years_since_last_promotion,
+                    "job_role": job_role
+                }])
+
+                row_df = row_df.rename(columns=ENG_TO_KOR)
+
+                prob = predictor.predict_single(row_df)
+
+                if prob is not None:
+                    update_attrition(conn, selected_emp_id, float(prob))
+
+                st.session_state["edit_success"] = True
+                st.rerun()
+
+            except Exception as e:
+                st.error(f"수정 오류: {e}")   
