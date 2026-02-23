@@ -1,7 +1,7 @@
 #  SKN25-2nd-2Team
 #  HR Attrition Prediction
 
-직원 데이터를 기반으로 퇴사 여부를 예측하는 머신러닝 Sass 서비스
+직원 데이터를 기반으로 퇴사 여부를 예측하는 머신러닝 Sass 서비스!
 
 ---
 
