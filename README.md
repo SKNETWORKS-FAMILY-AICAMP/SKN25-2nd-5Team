@@ -157,13 +157,14 @@ Kaggle에서 제공하는 <a href="https://www.kaggle.com/datasets/anshika2301/h
 
 > <img src="https://github.com/user-attachments/assets/c65b8359-978c-49e1-888a-32bb9269880e"  width="20" style="vertical-align:middle;" />&nbsp;**김홍익** : 직접 머신러닝 모델을 만들고 그 모델을 가지고 서비스를 만들어 보는 과정에서 많은 공부와 경험이 되었습니다. 부족한 점도 많이 알게되어 앞으로 공부하는데 많은 도움이 될 것 같습니다.
 >
-><img src="https://github.com/user-attachments/assets/05119932-d032-40e0-b5ef-9216c43e7e47" width="20" style="vertical-align:middle;" />&nbsp;**이채림** : ...
+><img src="https://github.com/user-attachments/assets/05119932-d032-40e0-b5ef-9216c43e7e47" width="20" style="vertical-align:middle;" />&nbsp;**이채림** : 수업에서 단순하게 따라하며 만들었던  머신러닝 모델을 구현하고 서비스화로 확장하는 과정에서 부족한 부분을 많이 채울 수 있었던 점이 가장 큰 성과였고 더욱 공부를 열심히 해야 한다는 생각이 많이 든 프로젝트였습니다.
 >
-> <img src="https://github.com/user-attachments/assets/4bec8b83-d36e-456a-8e99-b0f25fe9c8bc"  width="20" style="vertical-align:middle;" />&nbsp;**이한솔** : ...
+> <img src="https://github.com/user-attachments/assets/4bec8b83-d36e-456a-8e99-b0f25fe9c8bc"  width="20" style="vertical-align:middle;" />&nbsp;**이한솔** : 수업에서 배운걸 활용하면서 팀원분들과 협업하는 과정이 좋았습니다. 머신러닝/딥러닝에 대한 많은 부족함을 깨달은 프로젝트라 이번을 계기로 좀 더 공부하면서 부족한부분을 채워야겠다고 생각했습니다.
 >
-> <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : ...
+> <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : 두번째 프로젝트...아직 감이 잘 잡히지 않는 부분이 많았었는데, 전공하신 분들께서 많이 도와주시고 가르쳐 주셔서 프로젝트 하는 동안 정말 많이 배우게 된 것 같습니다. 이번 프로젝트를 기반으로 더 열심히 성장하겠습니다!
 >
 > <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : ...
+
 
 
 
