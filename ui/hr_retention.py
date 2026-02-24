@@ -88,7 +88,7 @@ def hr_retention_dashboard():
     with col_list:
         st.subheader(f"📍 긴급 면담 대상 ({len(priority_df)}명)")
         if not priority_df.empty:
-            display_cols = {'emp_id': '사번', 'name': '이름', 'department': '부서', 'Attrition_Prob': '퇴사확률', 'overtime': '야근여부'}
+            display_cols = {'emp_id': '사번', 'name': '이름', 'department': '부서', 'Attrition_Prob': '퇴사확률', 'overtime': '야근여부','performance_rating':'성과지수'}
             st.dataframe(
                 priority_df[list(display_cols.keys())].rename(columns=display_cols)
                 .style.format({'퇴사확률': '{:.1%}'})
