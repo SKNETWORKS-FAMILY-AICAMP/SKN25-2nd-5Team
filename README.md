@@ -105,7 +105,7 @@
 </p>
 * **핵심인재 관리시스템**: 각 직원들의 성과등급에 따라 면담 우선순위와 면담내용을 저장합니다.
 <p align="center">
-<img src ="">
+<img src ="https://github.com/user-attachments/assets/69737036-e34b-4252-a8ae-99c01be0542a">
 </p>
 
 ## 📂 프로젝트 구조
@@ -165,6 +165,7 @@ Kaggle에서 제공하는 [인사팀 분석 데이터셋](https://www.kaggle.com
 > <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : ...
 >
 > <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : ...
+
 
 
 
