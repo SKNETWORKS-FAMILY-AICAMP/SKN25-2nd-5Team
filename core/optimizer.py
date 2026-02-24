@@ -15,7 +15,7 @@ class HROptimizer:
         
         df_opt['현재_위험도'] = base_prob
 
-        high_risk_df = df_opt[df_opt['현재_위험도'] > 0.7].copy()
+        high_risk_df = df_opt[df_opt['현재_위험도'] > 0.9].copy()
 
         action_candidates = []
 
