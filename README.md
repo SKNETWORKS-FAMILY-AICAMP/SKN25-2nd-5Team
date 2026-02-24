@@ -114,13 +114,13 @@ HR_Analytics_SaaS/
 ```
 ---
 ## ERD
-<div align="left"> <img width="1307" height="1397" alt="Image" src="https://github.com/user-attachments/assets/69598209-a798-4401-a6d8-ef4e85c61b91" width="50%" height="50%" /> </div>
+<div align="left"> <img width="1307" height="1397" alt="Image" src="https://github.com/user-attachments/assets/69598209-a798-4401-a6d8-ef4e85c61b91" width="10%" height="10%" /> </div>
 
 ## 데이터 출처
 본 프로젝트는 다음과 같은 데이터를 활용하여 구성되었습니다.
 
 **HR Analytics Dataset**
-<img src="https://github.com/user-attachments/assets/dbe14c51-6495-459c-9a45-a01c65f630dc" width="50%" height="50%"/><br>
+<div align="left"><img src="https://github.com/user-attachments/assets/dbe14c51-6495-459c-9a45-a01c65f630dc" width="50%" height="50%"/></div><br>
 Kaggle에서 제공하는 [인사팀 분석 데이터](https://www.kaggle.com/datasets/anshika2301/hr-analytics-dataset/data)를 활용하였습니다.
 
 ---
@@ -136,6 +136,7 @@ Kaggle에서 제공하는 [인사팀 분석 데이터](https://www.kaggle.com/da
 > <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : ...
 >
 > <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : ...
+
 
 
 
