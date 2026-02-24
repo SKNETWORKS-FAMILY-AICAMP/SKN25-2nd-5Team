@@ -149,7 +149,7 @@ HR_Analytics_SaaS/
 
 **HR Analytics Dataset**
 <div align="left"><img src="https://github.com/user-attachments/assets/dbe14c51-6495-459c-9a45-a01c65f630dc" width="50%" height="50%"/></div><br>
-Kaggle에서 제공하는 <a href="https://www.kaggle.com/datasets/anshika2301/hr-analytics-dataset/data">[인사팀 분석 데이터셋]</a>를 활용하였습니다.
+Kaggle에서 제공하는 <a href="https://www.kaggle.com/datasets/anshika2301/hr-analytics-dataset/data" target="blank">[인사팀 분석 데이터셋]</a>를 활용하였습니다.
 
 ---
 
@@ -164,6 +164,7 @@ Kaggle에서 제공하는 <a href="https://www.kaggle.com/datasets/anshika2301/h
 > <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : ...
 >
 > <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : ...
+
 
 
 
