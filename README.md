@@ -9,7 +9,7 @@
 | 김홍익 | 이채림 | 이한솔 | 임하영 | 최유림 |
 |:--:|:--:|:--:|:--:|:--:|
 |  <img src="https://github.com/user-attachments/assets/c65b8359-978c-49e1-888a-32bb9269880e" width="150" height="150"/> |  <img src="https://github.com/user-attachments/assets/05119932-d032-40e0-b5ef-9216c43e7e47" width="150" height="150"/> |  <img src="https://github.com/user-attachments/assets/4bec8b83-d36e-456a-8e99-b0f25fe9c8bc" width="150" height="150"/> |  <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="150" height="150"/> |  <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="150" height="150"/> |
-| `@skidroww` | `@chaechae18` | `@sol1021` | `@yulim8813` | `@pureunsaerok` |
+| `@skidroww` | `@chaechae18` | `@sol1021` | `@pureunsaerok` | `@yulim8813`|
 | 공통 레이아웃 컴포넌트<br>dashboard 페이지<br>최적화 솔루션 페이지<br>전처리 및 모델링 | 퇴사 위험 예측 및 분석 페이지<br>직원 관리 및 수정 페이지<br> 맞춤형 시뮬레이션 페이지<br>DB 설계 | 핵심 인재 관리 페이지<br>DB 설계<br>ERD | 로그인 페이지<br>회원가입 페이지<br>발표준비 | 데이터 전처리<br>모델링<br>발표준비 |
 
 ##  프로젝트 개요
@@ -104,6 +104,7 @@ HR_Analytics_SaaS/
 ├── [db.py](http://db.py/)              # DB 연결 (필요 시)
 └── data_loader.py     # CSV 파일 처리, 전처리 함수
 ```
+
 
 
 
