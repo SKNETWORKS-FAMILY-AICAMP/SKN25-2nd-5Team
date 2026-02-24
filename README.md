@@ -155,8 +155,8 @@ Kaggle에서 제공하는 [인사팀 분석 데이터셋](https://www.kaggle.com
 
 ## 한줄 회고
 
-> <img src="https://github.com/user-attachments/assets/c65b8359-978c-49e1-888a-32bb9269880e"  width="20" style="vertical-align:middle;" />&nbsp;**김홍익** : 
->직접 머신러닝 모델을 만들고 그 모델을 가지고 서비스를 만들어 보는 과정에서 많은 공부와 경험이 되었습니다. 부족한 점도 많이 알게되어 앞으로 공부하는데 많은 도움이 될 것 같습니다.
+> <img src="https://github.com/user-attachments/assets/c65b8359-978c-49e1-888a-32bb9269880e"  width="20" style="vertical-align:middle;" />&nbsp;**김홍익** : 직접 머신러닝 모델을 만들고 그 모델을 가지고 서비스를 만들어 보는 과정에서 많은 공부와 경험이 되었습니다. 부족한 점도 많이 알게되어 앞으로 공부하는데 많은 도움이 될 것 같습니다.
+>
 ><img src="https://github.com/user-attachments/assets/05119932-d032-40e0-b5ef-9216c43e7e47" width="20" style="vertical-align:middle;" />&nbsp;**이채림** : ...
 >
 > <img src="https://github.com/user-attachments/assets/4bec8b83-d36e-456a-8e99-b0f25fe9c8bc"  width="20" style="vertical-align:middle;" />&nbsp;**이한솔** : ...
@@ -164,6 +164,7 @@ Kaggle에서 제공하는 [인사팀 분석 데이터셋](https://www.kaggle.com
 > <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : ...
 >
 > <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : ...
+
 
 
 
