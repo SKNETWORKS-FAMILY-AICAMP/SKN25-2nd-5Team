@@ -1,9 +1,16 @@
-#  SKN25-2nd-2Team
+#  SKN25-2nd-5Team
 #  HR Attrition Prediction
 
 직원 데이터를 기반으로 퇴사 여부를 예측하는 머신러닝 Sass 서비스!
 
 ---
+
+## 팀소개
+| 김홍익 | 이채림 | 이한솔 | 임하영 | 최유림 |
+|:--:|:--:|:--:|:--:|:--:|
+|  <img src="https://github.com/user-attachments/assets/c65b8359-978c-49e1-888a-32bb9269880e" width="150" height="150"/> |  <img src="https://github.com/user-attachments/assets/05119932-d032-40e0-b5ef-9216c43e7e47" width="150" height="150"/> |  <img src="https://github.com/user-attachments/assets/4bec8b83-d36e-456a-8e99-b0f25fe9c8bc" width="150" height="150"/> |  <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="150" height="150"/> |  <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="150" height="150"/> |
+| `@skidroww` | `@chaechae18` | `@sol1021` | `@pureunsaerok` | `@yulim8813`|
+| 공통 레이아웃 컴포넌트<br>dashboard 페이지<br>최적화 솔루션 페이지<br>전처리 및 모델링 | 퇴사 위험 예측 및 분석 페이지<br>직원 관리 및 수정 페이지<br> 맞춤형 시뮬레이션 페이지<br>DB 설계 | 핵심 인재 관리 페이지<br>DB 설계<br>ERD | 로그인 페이지<br>회원가입 페이지<br>발표준비 | 데이터 전처리<br>모델링<br>발표준비 |
 
 ##  프로젝트 개요
 
@@ -16,12 +23,13 @@
 최적화(Optimize): 한정된 인사 예산 내에서 퇴사율을 낮추기 위한 최적의 처우 개선 시나리오 시뮬레이션
 
 실행(Execute): 특정 직원을 구제하기 위한 최소 비용 산출 및 우선순위 리포트 제공
+
 ---
 
 ## 🧠 문제 정의
 
 1. 배경 (Context)
-현대 기업 환경에서 핵심 인재의 이탈은 단순히 채용 비용의 발생을 넘어, 조직의 지식 자산 손실과 남은 팀원들의 사기 저하라는 치명적인 결과를 초래합니다. 하지만 기존의 인사 관리는 "이미 사직서를 낸 뒤에야" 대응하는 사후 약방문식 처방에 그치고 있습니다.
+* 현대 기업 환경에서 핵심 인재의 이탈은 단순히 채용 비용의 발생을 넘어, 조직의 지식 자산 손실과 남은 팀원들의 사기 저하라는 치명적인 결과를 초래합니다. 하지만 기존의 인사 관리는 "이미 사직서를 낸 뒤에야" 대응하는 사후 약방문식 처방에 그치고 있습니다.
 
 2. 핵심 문제 (Core Problems)
 * 예측의 부재 (Lack of Foresight): 어떤 직원이 어떤 요인(야근, 낮은 급여, 승진 누락 등)으로 인해 이탈 위험이 높아졌는지 데이터에 기반해 판단하기 어렵습니다.
@@ -37,25 +45,28 @@
 ## 🛠 사용 기술
 
 ### 🖥 Frontend
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)
 * **Streamlit**: 파이썬 기반 웹 UI 프레임워크 (인터랙티브 대시보드 구현)
 * **Plotly**: 데이터 시각화 라이브러리 (퇴사율 변화 및 인사 지표 차트 구현)
 
 ### ⚙️ Backend
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
 * **Python**: 시스템 메인 로직 및 처우 개선 최적화 알고리즘 엔진
 * **Pandas**: 인사 데이터(25개 지표) 전처리 및 데이터 분석
 * **NumPy**: 대규모 인원 대상 퇴사 확률 시뮬레이션 및 수치 연산
 
-### 📊 Data (Crawling & Processing)
-* **BeautifulSoup**: 웹 기반 정적 인사 정보 파싱 및 데이터 수집
-* **Selenium**: 동적 웹 페이지 자동화 제어 및 크롤링
-* **CSV/Excel**: 인사 원천 데이터 핸들링 및 입출력 관리
-
 ### 🗄 Database
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLALCHEMY-D71F00?style=for-the-badge&logo=sqlalchemy&logoColor=white)
 * **MySQL**: 직원 정보, 면담 기록, 처우 개선 이력 관리
 * **SQLAlchemy**: Python-DB 간 안정적인 ORM 및 커넥션 관리
 
 ### 🧠 Deep Learning / ML
-* **Scikit-learn**: 퇴사 예측 분류(Classification) 모델 학습 및 추론
+![Scikit Learn](https://img.shields.io/badge/SCIKIT%20LEARN-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white&)
+* **Scikit-learn, XGBoost**: 퇴사 예측 분류(Classification) 모델 학습 및 추론
 * **Pickle / Joblib**: 학습 모델(`model.pkl`) 및 피처 규격(`feature_names.pkl`) 직렬화
 * **Optimization Logic**: 급여 인상 및 승진 시나리오별 퇴사율 변화 산출 알고리즘
 
@@ -101,6 +112,34 @@ HR_Analytics_SaaS/
 ├── [db.py](http://db.py/)              # DB 연결 (필요 시)
 └── data_loader.py     # CSV 파일 처리, 전처리 함수
 ```
+---
+## ERD
+<div align="left"> <img width="1307" height="1397" alt="Image" src="https://github.com/user-attachments/assets/69598209-a798-4401-a6d8-ef4e85c61b91" width="10%" height="10%" /> </div>
+
+## 데이터 출처
+본 프로젝트는 다음과 같은 데이터를 활용하여 구성되었습니다.
+
+**HR Analytics Dataset**
+<div align="left"><img src="https://github.com/user-attachments/assets/dbe14c51-6495-459c-9a45-a01c65f630dc" width="50%" height="50%"/></div><br>
+Kaggle에서 제공하는 [인사팀 분석 데이터셋](https://www.kaggle.com/datasets/anshika2301/hr-analytics-dataset/data)를 활용하였습니다.
+
+---
+
+## 한줄 회고
+
+> <img src="https://github.com/user-attachments/assets/c65b8359-978c-49e1-888a-32bb9269880e"  width="20" style="vertical-align:middle;" />&nbsp;**김홍익** : ...
+>
+><img src="https://github.com/user-attachments/assets/05119932-d032-40e0-b5ef-9216c43e7e47" width="20" style="vertical-align:middle;" />&nbsp;**이채림** : ...
+>
+> <img src="https://github.com/user-attachments/assets/4bec8b83-d36e-456a-8e99-b0f25fe9c8bc"  width="20" style="vertical-align:middle;" />&nbsp;**이한솔** : ...
+>
+> <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : ...
+>
+> <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : ...
+
+
+
+
 
 
 
