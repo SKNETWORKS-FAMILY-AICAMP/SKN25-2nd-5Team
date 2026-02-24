@@ -95,7 +95,8 @@ def hr_retention_dashboard():
                 'name': '이름',
                 'department': '부서',
                 'attrition_numeric': '퇴사확률',
-                'overtime': '야근여부'
+                'overtime': '야근여부',
+                'performance_rating':'성과등급'
             }
             st.dataframe(
                 priority_df[list(display_cols.keys())].rename(columns=display_cols)
