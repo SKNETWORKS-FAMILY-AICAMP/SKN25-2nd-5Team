@@ -55,14 +55,16 @@ def hr_retention_dashboard():
     def load_data_from_db():
         try:
             conn = get_db()
-            query = "SELECT * FROM employees"
+            id = st.session_state["user_id"] 
+            query = f"""
+                    SELECT *
+                    FROM employees e
+                    WHERE e.user_id = {id}
+                    """
             df = pd.read_sql(query, conn)
             #conn.close()
-            
-            if 'attrition' in df.columns:
-                df['Attrition_Prob'] = df['attrition'].apply(
-                    lambda x: np.random.uniform(0.8, 0.95) if x == 'Yes' else np.random.uniform(0.05, 0.3)
-                )
+            df['attrition'] = pd.to_numeric(df['attrition'], errors='coerce')
+            #df['attrition'] = (df['attrition'] * 100).fillna(0).astype(int)
             return df
         except Exception as e:
             st.error(f"❌ DB 연결 오류: {e}")
@@ -74,21 +76,33 @@ def hr_retention_dashboard():
         st.warning("표시할 데이터가 없습니다. DB 연결 상태를 확인해주세요.")
         return
 
-    # --- 3. 사이드바 필터 ---
+    # --- 1. 사이드바 필터 ---
     st.sidebar.header("🔍 필터 설정")
-    risk_threshold = st.sidebar.slider("퇴사 위험 임계치 (%)", 0, 100, 70) / 100
-    
-    priority_df = df[
-        (df['performance_rating'] >= 3) & (df['Attrition_Prob'] >= risk_threshold)
-    ].sort_values(by='Attrition_Prob', ascending=False)
+    risk_threshold = st.sidebar.slider("퇴사 위험 임계치 (%)", 0, 100, 70)  # 0~100%
 
-    # --- 4. 메인 화면 레이아웃 ---
+    # --- 2. attrition 컬럼을 숫자(float)로 변환하고 0~1 범위라고 가정 ---
+    df['attrition_numeric'] = pd.to_numeric(df['attrition'], errors='coerce').fillna(0)
+
+    # --- 3. 사이드바 기준 필터링 (0~100% 기준으로 맞춤) ---
+    priority_df = df[
+        (df['performance_rating'] >= 3) &
+        ((df['attrition_numeric']*100) <= risk_threshold)
+    ].sort_values(by='attrition_numeric', ascending=False)
+
+    # --- 4. 메인 화면 출력 ---
     col_list, col_manage = st.columns([1.3, 1])
 
     with col_list:
         st.subheader(f"📍 긴급 면담 대상 ({len(priority_df)}명)")
         if not priority_df.empty:
-            display_cols = {'emp_id': '사번', 'name': '이름', 'department': '부서', 'Attrition_Prob': '퇴사확률', 'overtime': '야근여부','performance_rating':'성과지수'}
+            display_cols = {
+                'emp_id': '사번',
+                'name': '이름',
+                'department': '부서',
+                'attrition_numeric': '퇴사확률',
+                'overtime': '야근여부',
+                'performance_rating':'성과등급'
+            }
             st.dataframe(
                 priority_df[list(display_cols.keys())].rename(columns=display_cols)
                 .style.format({'퇴사확률': '{:.1%}'})
@@ -97,7 +111,6 @@ def hr_retention_dashboard():
             )
         else:
             st.success("✅ 관리 기준 내에 위험 인재가 없습니다.")
-
     with col_manage:
         st.subheader("📝 상세 정보 및 기록")
         if not priority_df.empty:
@@ -116,7 +129,7 @@ def hr_retention_dashboard():
                     st.write(f"**직무 만족도:** {'⭐' * int(emp['job_satisfaction'])}")
                     st.write(f"**급여:** ${emp['monthly_income']:,}")
                 st.divider()
-                st.progress(emp['Attrition_Prob'], text=f"이탈 위험도: {emp['Attrition_Prob']:.1%}")
+                st.progress(emp['attrition'], text=f"이탈 위험도: {emp['attrition']:.1%}")
 
             # --- [메모 탭: DB 연동] ---
             t_input, t_history = st.tabs(["✍️ 메모 입력", "📚 관리 이력"])
