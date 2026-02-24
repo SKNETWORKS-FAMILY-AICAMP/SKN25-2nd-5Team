@@ -87,8 +87,6 @@
 <img src="https://github.com/user-attachments/assets/3b71dfea-7640-4d93-9142-865ebec3f61d">
 </p>
 
-
-
 * **사원 관리**: 각 직원을 추가 입력하고 수정합니다.
 <p align="center">
 <img src ="https://github.com/user-attachments/assets/605e32e4-066c-4831-96cd-dfebf8f57035">
@@ -96,13 +94,14 @@
 
 * **급여 인상 시뮬레이션**: 특정 인원의 퇴사율을 줄일 수 있는 최적의 시뮬레이션과 급여인상, 승진했을 때 퇴사 확률이 어떻게 변화하는지 실시간 피드백을 제공합니다.
 <p align="center">
-<img src ="">
+<img src ="https://github.com/user-attachments/assets/32de6f20-d43a-479c-bb37-439c42ce6a34">
 </p>
 
 * **개인별 맞춤형 솔루션**: 각 직원을 안전권으로 이동시키기 위한 최적의 추가 비용을 제안합니다.
 <p align="center">
 <img src ="https://github.com/user-attachments/assets/91f4e5f7-c087-4395-874b-15c69a13cdfe">
 </p>
+
 * **핵심인재 관리시스템**: 각 직원들의 성과등급에 따라 면담 우선순위와 면담내용을 저장합니다.
 <p align="center">
 <img src ="https://github.com/user-attachments/assets/69737036-e34b-4252-a8ae-99c01be0542a">
@@ -165,6 +164,7 @@ Kaggle에서 제공하는 [인사팀 분석 데이터셋](https://www.kaggle.com
 > <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : ...
 >
 > <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : ...
+
 
 
 
