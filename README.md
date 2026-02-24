@@ -45,20 +45,28 @@
 ## 🛠 사용 기술
 
 ### 🖥 Frontend
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)
 * **Streamlit**: 파이썬 기반 웹 UI 프레임워크 (인터랙티브 대시보드 구현)
 * **Plotly**: 데이터 시각화 라이브러리 (퇴사율 변화 및 인사 지표 차트 구현)
 
 ### ⚙️ Backend
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
 * **Python**: 시스템 메인 로직 및 처우 개선 최적화 알고리즘 엔진
 * **Pandas**: 인사 데이터(25개 지표) 전처리 및 데이터 분석
 * **NumPy**: 대규모 인원 대상 퇴사 확률 시뮬레이션 및 수치 연산
 
 ### 🗄 Database
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLALCHEMY-D71F00?style=for-the-badge&logo=sqlalchemy&logoColor=white)
 * **MySQL**: 직원 정보, 면담 기록, 처우 개선 이력 관리
 * **SQLAlchemy**: Python-DB 간 안정적인 ORM 및 커넥션 관리
 
 ### 🧠 Deep Learning / ML
-* **Scikit-learn**: 퇴사 예측 분류(Classification) 모델 학습 및 추론
+![Scikit Learn](https://img.shields.io/badge/SCIKIT%20LEARN-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white&)
+* **Scikit-learn, XGBoost**: 퇴사 예측 분류(Classification) 모델 학습 및 추론
 * **Pickle / Joblib**: 학습 모델(`model.pkl`) 및 피처 규격(`feature_names.pkl`) 직렬화
 * **Optimization Logic**: 급여 인상 및 승진 시나리오별 퇴사율 변화 산출 알고리즘
 
@@ -104,13 +112,30 @@ HR_Analytics_SaaS/
 ├── [db.py](http://db.py/)              # DB 연결 (필요 시)
 └── data_loader.py     # CSV 파일 처리, 전처리 함수
 ```
+---
+## ERD
+<div align="left"> <img width="1307" height="1397" alt="Image" src="https://github.com/user-attachments/assets/69598209-a798-4401-a6d8-ef4e85c61b91" /> </div>
 
+## 데이터 출처
+본 프로젝트는 다음과 같은 데이터를 활용하여 구성되었습니다.
 
+**HR Analytics Dataset**
+<img src="https://github.com/user-attachments/assets/dbe14c51-6495-459c-9a45-a01c65f630dc"/>
+Kaggle에서 제공하는 [인사팀 분석 데이터](https://www.kaggle.com/datasets/anshika2301/hr-analytics-dataset/data)를 활용하였습니다.
 
+---
 
+## 한줄 회고
 
-
-
+> <img src="https://github.com/user-attachments/assets/c65b8359-978c-49e1-888a-32bb9269880e"  width="20" style="vertical-align:middle;" />&nbsp;**김홍익** : ...
+>
+><img src="https://github.com/user-attachments/assets/05119932-d032-40e0-b5ef-9216c43e7e47" width="20" style="vertical-align:middle;" />&nbsp;**이채림** : ...
+>
+> <img src="https://github.com/user-attachments/assets/4bec8b83-d36e-456a-8e99-b0f25fe9c8bc"  width="20" style="vertical-align:middle;" />&nbsp;**이한솔** : ...
+>
+> <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : ...
+>
+> <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : ...
 
 
 
