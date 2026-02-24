@@ -55,7 +55,12 @@ def hr_retention_dashboard():
     def load_data_from_db():
         try:
             conn = get_db()
-            query = "SELECT * FROM employees"
+            id = st.session_state["user_id"] 
+            query = f"""
+                    SELECT *
+                    FROM employees e
+                    WHERE e.user_id = {id}
+                    """
             df = pd.read_sql(query, conn)
             #conn.close()
             df['attrition'] = pd.to_numeric(df['attrition'], errors='coerce')
