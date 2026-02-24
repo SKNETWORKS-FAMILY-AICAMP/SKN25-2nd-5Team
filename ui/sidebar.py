@@ -33,13 +33,13 @@ def render_sidebar():
     """, unsafe_allow_html=True)
     
     pages = {
-        "Dashboard": "menu_dashboard",
-        "Prediction": "menu_prediction",
-        "Employee 관리": "menu_employee",
-        "Simulation": "menu_simulation",
-        "Optimization": "menu_optimization",
-        "피트니스 데이터 분석": "menu_infra",
-        "HrRetention": "menu_hr_retention"
+        "대 시 보 드": "menu_dashboard",
+        "직원 퇴사 예측": "menu_prediction",
+        "사 원 관 리": "menu_employee",
+        "인사 시뮬레이션": "menu_simulation",
+        "인사 최적화": "menu_optimization",
+        "소       개": "menu_infra",
+        "인사 유지 관리": "menu_hr_retention"
     }
     # -----상단: 사용자 정보 및 로그아웃-----
     with st.sidebar:

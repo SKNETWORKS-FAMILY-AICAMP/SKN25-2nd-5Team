@@ -16,7 +16,7 @@ def login_user(conn, username, password):
         st.error(f"로그인 오류:{e}")
         return None
 
-def register_user(conn, username, password):
+def register_user(conn, username, password, name, company):
     try:
         cursor = conn.cursor()
         check_query = "SELECT * FROM users WHERE username = %s"
@@ -26,8 +26,8 @@ def register_user(conn, username, password):
         
         hashed_pw = hash_password(password)
         
-        insert_query = "INSERT INTO users (username,password) VALUES (%s, %s)"
-        cursor.execute(insert_query,(username, hashed_pw))
+        insert_query = "INSERT INTO users (username,password,name,company) VALUES (%s, %s,%s,%s)"
+        cursor.execute(insert_query,(username, hashed_pw,name,company))
         conn.commit()
         return True
     except Exception as e:

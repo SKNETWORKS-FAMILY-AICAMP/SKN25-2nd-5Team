@@ -6,7 +6,7 @@ from ui.prediction import render_prediction_page
 from ui.management import render_management
 from ui.simulation import render_simulation_page
 from ui.optimization import render_optimization_page
-from ui.infra_page import render_infra_page
+from ui.infra_page import render_guide_page
 from ui.login_page import render_login_page
 from ui.hr_retention import hr_retention_dashboard
 
@@ -30,7 +30,7 @@ class App:
         if 'is_logged_in' not in st.session_state:
             st.session_state['is_logged_in'] = False
         if 'current_page' not in st.session_state:
-            st.session_state.current_page = "피트니스 데이터 분석"
+            st.session_state.current_page = "소       개"
 
         
 
@@ -41,19 +41,19 @@ class App:
             render_sidebar()
             # 페이지 라우팅
             page = st.session_state.current_page
-            if page == "피트니스 데이터 분석":
-                render_infra_page(self.conn)
-            elif page == "Dashboard":
+            if page == "소       개":
+                render_guide_page()
+            elif page == "대 시 보 드":
                 render_dashboard()
-            elif page == "Prediction":
+            elif page == "직원 퇴사 예측":
                 render_prediction_page()
-            elif page == "Employee 관리":
+            elif page == "사 원 관 리":
                 render_management()
-            elif page == "Simulation":
+            elif page == "인사 시뮬레이션":
                 render_simulation_page()
-            elif page == "Optimization":
+            elif page == "인사 최적화":
                 render_optimization_page()
-            elif page =="HrRetention":
+            elif page =="인사 유지 관리":
                 hr_retention_dashboard()
 
 
