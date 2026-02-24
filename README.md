@@ -1,4 +1,4 @@
-#  SKN25-2nd-2Team
+#  SKN25-2nd-5Team
 #  HR Attrition Prediction
 
 직원 데이터를 기반으로 퇴사 여부를 예측하는 머신러닝 Sass 서비스!
@@ -136,6 +136,7 @@ Kaggle에서 제공하는 [인사팀 분석 데이터셋](https://www.kaggle.com
 > <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : ...
 >
 > <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : ...
+
 
 
 
