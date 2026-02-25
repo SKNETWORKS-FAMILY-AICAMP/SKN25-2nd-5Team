@@ -72,45 +72,78 @@
 
 ---
 ## 🚀 핵심 기능 (Key Features)
+<p align="center">
+<img src="https://github.com/user-attachments/assets/86c0d6df-7c3d-4bf8-bf66-d43ec49a2d2d">
+</p>
+<p align="center">
+<img src="https://github.com/user-attachments/assets/d914e69b-2868-4b67-af1d-fd46f001d374">
+</p>
+<p align="center">
+<img src="https://github.com/user-attachments/assets/5182ada5-163f-424b-865d-9725ed7921e9">
+</p>
 
 * **실시간 퇴사 위험도 예측**: 사내 인사 데이터를 업로드하여 직원별 퇴사 확률을 즉각적으로 도출합니다.
-* **가성비 기반 구제 리포트**: 한정된 예산 내에서 가장 효율적으로 퇴사율을 낮출 수 있는 인재 리스트를 제공합니다.
-* **급여 인상 시뮬레이션**: 특정 인원의 급여를 인상했을 때 퇴사 확률이 어떻게 변화하는지 실시간 피드백을 제공합니다.
+<p align="center">
+<img src="https://github.com/user-attachments/assets/3b71dfea-7640-4d93-9142-865ebec3f61d">
+</p>
+
+* **사원 관리**: 각 직원을 추가 입력하고 수정합니다.
+<p align="center">
+<img src ="https://github.com/user-attachments/assets/605e32e4-066c-4831-96cd-dfebf8f57035">
+</p>
+
+* **급여 인상 시뮬레이션**: 특정 인원의 퇴사율을 줄일 수 있는 최적의 시뮬레이션과 급여인상, 승진했을 때 퇴사 확률이 어떻게 변화하는지 실시간 피드백을 제공합니다.
+<p align="center">
+<img src ="https://github.com/user-attachments/assets/32de6f20-d43a-479c-bb37-439c42ce6a34">
+</p>
+
 * **개인별 맞춤형 솔루션**: 각 직원을 안전권으로 이동시키기 위한 최적의 추가 비용을 제안합니다.
+<p align="center">
+<img src ="https://github.com/user-attachments/assets/91f4e5f7-c087-4395-874b-15c69a13cdfe">
+</p>
+
 * **핵심인재 관리시스템**: 각 직원들의 성과등급에 따라 면담 우선순위와 면담내용을 저장합니다.
+<p align="center">
+<img src ="https://github.com/user-attachments/assets/69737036-e34b-4252-a8ae-99c01be0542a">
+</p>
 
 ## 📂 프로젝트 구조
 ```
-HR_Analytics_SaaS/
+SKN25-2nd-5Team/ (HR_Analytics_SaaS/)
 │
-├── [main.py](http://main.py/)                # 앱 실행 진입점 (python [main.py](http://main.py/))
-├── [app.py](http://app.py/)                 # 앱 설정 및 라우팅 (Controller 역할)
-├── requirements.txt       # 의존성 패키지 (xgboost, shap, streamlit 등)
+├── main.py                # 앱 실행 진입점 (python main.py)
+├── app.py                 # 앱 설정 및 라우팅 (Controller 역할)
+├── README.md              #  
+├── .gitignore             # 
+├── requirements.txt       # 
 │
-├── models/                # [저장소] 학습된 모델 파일 저장
-│   ├── best_model.pkl     # 학습된 분류 모델 (XGBoost/RandomForest)
-│   ├── scaler.pkl         # 데이터 전처리용 스케일러
-│   └── explainer.pkl      # SHAP Explainer 객체 (선택)
+├── models/                # 학습된 모델 파일 저장
+│   ├── best_model.pkl     # 학습된 분류 모델 (XGBoost)
+│   └── feature_names.pkl  # 학습에 사용된 피처 이름 목록 
 │
 ├── core/                  # [핵심 로직] UI와 독립적인 순수 파이썬 로직 (The Brain)
-│   ├── init.py
-│   ├── [loader.py](http://loader.py/)          # 모델 로드 및 캐싱 (@st.cache_resource)
-│   ├── [predictor.py](http://predictor.py/)       # 퇴사 확률 예측 함수
-│   ├── [explainer.py](http://explainer.py/)       # SHAP 값 계산 및 시각화 데이터 생성
-│   └── [optimizer.py](http://optimizer.py/)       # 예산 대비 퇴사율 최적화 알고리즘
+│   ├── loader.py          # 모델 로드 및 캐싱 (@st.cache_resource)
+│   ├── predictor.py       # 퇴사 확률 예측 함수
+│   ├── optimizer.py       # 예산 대비 퇴사율 최적화 알고리즘
+│   └── simulator.py       # What-if 시뮬레이션 연산 로직 
 │
 ├── ui/                    # [화면] 사용자에게 보여지는 페이지들 (View)
-│   ├── init.py
-│   ├── [sidebar.py](http://sidebar.py/)         # 사이드바 메뉴
-│   ├── [dashboard.py](http://dashboard.py/)       # 대시보드 (전체 현황)
-│   ├── [prediction.py](http://prediction.py/)      # 개별/일괄 예측 및 데이터 업로드
-│   ├── [simulation.py](http://simulation.py/)      # What-if 시뮬레이션 (연봉 인상 등)
-│   └── [optimization.py](http://optimization.py/)    # 최적화 솔루션 페이지
-│   └── [hr_retention.py](http://optimization.py/)    # 핵심인재 관리(면담내용 작성)
+│   ├── login_page.py      # 사용자 로그인 페이지 
+│   ├── sidebar.py         # 사이드바 메뉴 및 네비게이션
+│   ├── dashboard.py       # 대시보드
+│   ├── management.py      # 직원 데이터 관리 페이지 
+│   ├── prediction.py      # 개별/일괄 예측 및 데이터 업로드
+│   ├── simulation.py      # What-if 시뮬레이션 UI 
+│   ├── optimization.py    # 최적화 솔루션 페이지
+│   ├── hr_retention.py    # 핵심인재 관리 
+│   └── infra_page.py      # 인프라/시스템 모니터링 페이지 
 │
-└── utils/                 # [도구] DB 연결, 데이터 가공 등
-├── [db.py](http://db.py/)              # DB 연결 (필요 시)
-└── data_loader.py     # CSV 파일 처리, 전처리 함수
+└── utils/                 # [도구] 인증, DB 연결, 데이터 가공 등
+    ├── db.py              # 데이터베이스 연결 및 쿼리 실행
+    ├── data_loader.py     # CSV 파일 처리 및 데이터 전처리
+    ├── auth_func.py       # 로그인 인증 및 권한 확인 함수 
+    ├── column_mapper.py   # 데이터 컬럼명 변환 및 매핑 
+    └── employee_repo.py   # 직원 데이터 조회/수정/삭제 등 Repository 패턴 구현
 ```
 ---
 ## ERD
@@ -121,21 +154,38 @@ HR_Analytics_SaaS/
 
 **HR Analytics Dataset**
 <div align="left"><img src="https://github.com/user-attachments/assets/dbe14c51-6495-459c-9a45-a01c65f630dc" width="50%" height="50%"/></div><br>
-Kaggle에서 제공하는 [인사팀 분석 데이터셋](https://www.kaggle.com/datasets/anshika2301/hr-analytics-dataset/data)를 활용하였습니다.
+Kaggle에서 제공하는 <a href="https://www.kaggle.com/datasets/anshika2301/hr-analytics-dataset/data" target="_blank">[인사팀 분석 데이터셋]</a>를 활용하였습니다.
 
 ---
+## 모델 평가표
+<img width="2400" height="1500" alt="classification_report" src="https://github.com/user-attachments/assets/98b2de0c-96eb-4152-a0e9-7a9b4dcdea02" />
 
+---
 ## 한줄 회고
 
-> <img src="https://github.com/user-attachments/assets/c65b8359-978c-49e1-888a-32bb9269880e"  width="20" style="vertical-align:middle;" />&nbsp;**김홍익** : ...
+> <img src="https://github.com/user-attachments/assets/c65b8359-978c-49e1-888a-32bb9269880e"  width="20" style="vertical-align:middle;" />&nbsp;**김홍익** : 직접 머신러닝 모델을 만들고 그 모델을 가지고 서비스를 만들어 보는 과정에서 많은 공부와 경험이 되었습니다. 부족한 점도 많이 알게되어 앞으로 공부하는데 많은 도움이 될 것 같습니다.
 >
-><img src="https://github.com/user-attachments/assets/05119932-d032-40e0-b5ef-9216c43e7e47" width="20" style="vertical-align:middle;" />&nbsp;**이채림** : ...
+><img src="https://github.com/user-attachments/assets/05119932-d032-40e0-b5ef-9216c43e7e47" width="20" style="vertical-align:middle;" />&nbsp;**이채림** : 수업에서 단순하게 따라하며 만들었던  머신러닝 모델을 구현하고 서비스화로 확장하는 과정에서 부족한 부분을 많이 채울 수 있었던 점이 가장 큰 성과였고 더욱 공부를 열심히 해야 한다는 생각이 많이 든 프로젝트였습니다.
 >
-> <img src="https://github.com/user-attachments/assets/4bec8b83-d36e-456a-8e99-b0f25fe9c8bc"  width="20" style="vertical-align:middle;" />&nbsp;**이한솔** : ...
+> <img src="https://github.com/user-attachments/assets/4bec8b83-d36e-456a-8e99-b0f25fe9c8bc"  width="20" style="vertical-align:middle;" />&nbsp;**이한솔** : 수업에서 배운걸 활용하면서 팀원분들과 협업하는 과정이 좋았습니다. 머신러닝/딥러닝에 대한 많은 부족함을 깨달은 프로젝트라 이번을 계기로 좀 더 공부하면서 부족한부분을 채워야겠다고 생각했습니다.
 >
-> <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : ...
+> <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : 두번째 프로젝트...아직 감이 잘 잡히지 않는 부분이 많았었는데, 전공하신 분들께서 많이 도와주시고 가르쳐 주셔서 프로젝트 하는 동안 정말 많이 배우게 된 것 같습니다. 이번 프로젝트를 기반으로 더 열심히 성장하겠습니다!
 >
-> <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : ...
+> <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : 팀원분들의 세심한 배려와 도움 덕분에 비전공자의 한계를 넘어 프로젝트 전 과정을 배울 수 있었습니다. 전처리부터 XGBoost 학습까지 직접 수행하며 머신러닝의 재미를 체감했고, 모델링뿐만 아니라 프로젝트 전체의 흐름을 익히며 한 단계 더 성장한 뜻깊은 경험이었습니다. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
