@@ -109,36 +109,41 @@
 
 ## 📂 프로젝트 구조
 ```
-HR_Analytics_SaaS/
+SKN25-2nd-5Team/ (HR_Analytics_SaaS/)
 │
-├── [main.py](http://main.py/)                # 앱 실행 진입점 (python [main.py](http://main.py/))
-├── [app.py](http://app.py/)                 # 앱 설정 및 라우팅 (Controller 역할)
-├── requirements.txt       # 의존성 패키지 (xgboost, shap, streamlit 등)
+├── main.py                # 앱 실행 진입점 (python main.py)
+├── app.py                 # 앱 설정 및 라우팅 (Controller 역할)
+├── README.md              #  
+├── .gitignore             # 
+├── requirements.txt       # 
 │
-├── models/                # [저장소] 학습된 모델 파일 저장
-│   ├── best_model.pkl     # 학습된 분류 모델 (XGBoost/RandomForest)
-│   ├── scaler.pkl         # 데이터 전처리용 스케일러
-│   └── explainer.pkl      # SHAP Explainer 객체 (선택)
+├── models/                # 학습된 모델 파일 저장
+│   ├── best_model.pkl     # 학습된 분류 모델 (XGBoost)
+│   └── feature_names.pkl  # 학습에 사용된 피처 이름 목록 
 │
 ├── core/                  # [핵심 로직] UI와 독립적인 순수 파이썬 로직 (The Brain)
-│   ├── init.py
-│   ├── [loader.py](http://loader.py/)          # 모델 로드 및 캐싱 (@st.cache_resource)
-│   ├── [predictor.py](http://predictor.py/)       # 퇴사 확률 예측 함수
-│   ├── [explainer.py](http://explainer.py/)       # SHAP 값 계산 및 시각화 데이터 생성
-│   └── [optimizer.py](http://optimizer.py/)       # 예산 대비 퇴사율 최적화 알고리즘
+│   ├── loader.py          # 모델 로드 및 캐싱 (@st.cache_resource)
+│   ├── predictor.py       # 퇴사 확률 예측 함수
+│   ├── optimizer.py       # 예산 대비 퇴사율 최적화 알고리즘
+│   └── simulator.py       # What-if 시뮬레이션 연산 로직 
 │
 ├── ui/                    # [화면] 사용자에게 보여지는 페이지들 (View)
-│   ├── init.py
-│   ├── [sidebar.py](http://sidebar.py/)         # 사이드바 메뉴
-│   ├── [dashboard.py](http://dashboard.py/)       # 대시보드 (전체 현황)
-│   ├── [prediction.py](http://prediction.py/)      # 개별/일괄 예측 및 데이터 업로드
-│   ├── [simulation.py](http://simulation.py/)      # What-if 시뮬레이션 (연봉 인상 등)
-│   └── [optimization.py](http://optimization.py/)    # 최적화 솔루션 페이지
-│   └── [hr_retention.py](http://optimization.py/)    # 핵심인재 관리(면담내용 작성)
+│   ├── login_page.py      # 사용자 로그인 페이지 
+│   ├── sidebar.py         # 사이드바 메뉴 및 네비게이션
+│   ├── dashboard.py       # 대시보드
+│   ├── management.py      # 직원 데이터 관리 페이지 
+│   ├── prediction.py      # 개별/일괄 예측 및 데이터 업로드
+│   ├── simulation.py      # What-if 시뮬레이션 UI 
+│   ├── optimization.py    # 최적화 솔루션 페이지
+│   ├── hr_retention.py    # 핵심인재 관리 
+│   └── infra_page.py      # 인프라/시스템 모니터링 페이지 
 │
-└── utils/                 # [도구] DB 연결, 데이터 가공 등
-├── [db.py](http://db.py/)              # DB 연결 (필요 시)
-└── data_loader.py     # CSV 파일 처리, 전처리 함수
+└── utils/                 # [도구] 인증, DB 연결, 데이터 가공 등
+    ├── db.py              # 데이터베이스 연결 및 쿼리 실행
+    ├── data_loader.py     # CSV 파일 처리 및 데이터 전처리
+    ├── auth_func.py       # 로그인 인증 및 권한 확인 함수 
+    ├── column_mapper.py   # 데이터 컬럼명 변환 및 매핑 
+    └── employee_repo.py   # 직원 데이터 조회/수정/삭제 등 Repository 패턴 구현
 ```
 ---
 ## ERD
@@ -167,6 +172,7 @@ Kaggle에서 제공하는 <a href="https://www.kaggle.com/datasets/anshika2301/h
 > <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : 두번째 프로젝트...아직 감이 잘 잡히지 않는 부분이 많았었는데, 전공하신 분들께서 많이 도와주시고 가르쳐 주셔서 프로젝트 하는 동안 정말 많이 배우게 된 것 같습니다. 이번 프로젝트를 기반으로 더 열심히 성장하겠습니다!
 >
 > <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : 팀원분들의 세심한 배려와 도움 덕분에 비전공자의 한계를 넘어 프로젝트 전 과정을 배울 수 있었습니다. 전처리부터 XGBoost 학습까지 직접 수행하며 머신러닝의 재미를 체감했고, 모델링뿐만 아니라 프로젝트 전체의 흐름을 익히며 한 단계 더 성장한 뜻깊은 경험이었습니다. 
+
 
 
 
