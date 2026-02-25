@@ -152,7 +152,10 @@ HR_Analytics_SaaS/
 Kaggle에서 제공하는 <a href="https://www.kaggle.com/datasets/anshika2301/hr-analytics-dataset/data" target="_blank">[인사팀 분석 데이터셋]</a>를 활용하였습니다.
 
 ---
+## 모델 평가표
+<img width="2400" height="1500" alt="classification_report" src="https://github.com/user-attachments/assets/98b2de0c-96eb-4152-a0e9-7a9b4dcdea02" />
 
+---
 ## 한줄 회고
 
 > <img src="https://github.com/user-attachments/assets/c65b8359-978c-49e1-888a-32bb9269880e"  width="20" style="vertical-align:middle;" />&nbsp;**김홍익** : 직접 머신러닝 모델을 만들고 그 모델을 가지고 서비스를 만들어 보는 과정에서 많은 공부와 경험이 되었습니다. 부족한 점도 많이 알게되어 앞으로 공부하는데 많은 도움이 될 것 같습니다.
@@ -164,6 +167,7 @@ Kaggle에서 제공하는 <a href="https://www.kaggle.com/datasets/anshika2301/h
 > <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : 두번째 프로젝트...아직 감이 잘 잡히지 않는 부분이 많았었는데, 전공하신 분들께서 많이 도와주시고 가르쳐 주셔서 프로젝트 하는 동안 정말 많이 배우게 된 것 같습니다. 이번 프로젝트를 기반으로 더 열심히 성장하겠습니다!
 >
 > <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : 팀원분들의 세심한 배려와 도움 덕분에 비전공자의 한계를 넘어 프로젝트 전 과정을 배울 수 있었습니다. 전처리부터 XGBoost 학습까지 직접 수행하며 머신러닝의 재미를 체감했고, 모델링뿐만 아니라 프로젝트 전체의 흐름을 익히며 한 단계 더 성장한 뜻깊은 경험이었습니다. 
+
 
 
 
