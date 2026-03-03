@@ -3,6 +3,7 @@ import pandas as pd
 from core.optimizer import HROptimizer
 from utils.db import get_db
 from utils.employee_repo import get_user_employees
+from utils.column_mapper import ENG_TO_KOR
 
 
 def render_optimization_page():
@@ -27,6 +28,7 @@ def render_optimization_page():
         st.info("등록된 직원 데이터가 없습니다. 먼저 직원 데이터를 등록해주세요.")
         return
     
+    '''
     reverse_mapping = {
         "name": "이름", "age": "나이", "business_travel": "출장빈도", "department": "부서",
         "distance_from_home": "집과의거리", "education": "교육수준", "education_field": "전공분야",
@@ -39,7 +41,8 @@ def render_optimization_page():
         "years_in_current_role": "현재직무근무년수", "years_since_last_promotion": "마지막승진후경과년수",
         "job_role": "직무분류"
     }
-    df = df.rename(columns=reverse_mapping)
+    '''
+    df = df.rename(columns=ENG_TO_KOR)
 
     st.subheader("1. 제약 조건 입력")
 

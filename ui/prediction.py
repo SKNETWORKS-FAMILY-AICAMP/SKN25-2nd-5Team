@@ -25,6 +25,10 @@ def render_prediction_page():
     user_id = st.session_state.get("user_id")
     predictor = load_predictor()
 
+    if "user_id" not in st.session_state:
+        st.warning("로그인이 필요합니다. 먼저 로그인을 해주세요.")
+        return
+
     # 1️. CSV 업로드
     st.subheader("1. 데이터 업로드")
     uploaded_file = st.file_uploader("인사 데이터 (CSV) 파일을 업로드하세요", type=['csv'])

@@ -22,6 +22,10 @@ def render_simulation_page():
     user_id = st.session_state.get("user_id")
 
     df = get_user_employees(conn, user_id)
+    
+    if "user_id" not in st.session_state:
+        st.warning("로그인이 필요합니다. 먼저 로그인을 해주세요.")
+        return
 
     if df.empty:
         st.warning("등록된 직원이 없습니다.")
