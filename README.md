@@ -113,9 +113,9 @@ SKN25-2nd-5Team/ (HR_Analytics_SaaS/)
 │
 ├── main.py                # 앱 실행 진입점 (python main.py)
 ├── app.py                 # 앱 설정 및 라우팅 (Controller 역할)
-├── README.md              #  
-├── .gitignore             # 
-├── requirements.txt       # 
+├── README.md              # README
+├── .gitignore             # gitignore
+├── requirements.txt       # requirements
 │
 ├── models/                # 학습된 모델 파일 저장
 │   ├── best_model.pkl     # 학습된 분류 모델 (XGBoost)
@@ -172,6 +172,7 @@ Kaggle에서 제공하는 <a href="https://www.kaggle.com/datasets/anshika2301/h
 > <img src="https://github.com/user-attachments/assets/3a535abf-69be-4aba-a9b5-12ccf656b82e" width="20" style="vertical-align:middle;" />&nbsp;**임하영** : 두번째 프로젝트...아직 감이 잘 잡히지 않는 부분이 많았었는데, 전공하신 분들께서 많이 도와주시고 가르쳐 주셔서 프로젝트 하는 동안 정말 많이 배우게 된 것 같습니다. 이번 프로젝트를 기반으로 더 열심히 성장하겠습니다!
 >
 > <img src="https://github.com/user-attachments/assets/5f1f4e0c-a32d-4c10-9dcc-932ce4aff56e" width="20" style="vertical-align:middle;" />&nbsp;**최유림** : 팀원분들의 세심한 배려와 도움 덕분에 비전공자의 한계를 넘어 프로젝트 전 과정을 배울 수 있었습니다. 전처리부터 XGBoost 학습까지 직접 수행하며 머신러닝의 재미를 체감했고, 모델링뿐만 아니라 프로젝트 전체의 흐름을 익히며 한 단계 더 성장한 뜻깊은 경험이었습니다. 
+
 
 
 
