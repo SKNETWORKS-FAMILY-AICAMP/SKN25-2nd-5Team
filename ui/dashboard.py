@@ -8,10 +8,22 @@ import plotly.express as px
 from utils.db import get_db
 from utils.employee_repo import get_user_employees
 
+@st.cache_data(show_spinner=False)
+def get_predicted_data(df):
+    predictor = AttritionPredictor()
+    df_copy = df.copy()
+    df_copy['예측_퇴사확률'] = predictor.predict_dataframe(df_copy)
+    df_copy['위험군'] = df_copy['예측_퇴사확률'].apply(lambda x: '고위험' if x > 0.7 else '안정')
+    return df_copy
+
+@st.cache_data(show_spinner=False)
+def get_shap_data(df):
+    predictor = AttritionPredictor()
+    return predictor.get_global_shap(df)
+
 def render_dashboard():
     st.title("📊 HR Analytics Dashboard")
     st.markdown("회사 전체의  인사 데이터와 AI 기반 퇴사 위험 현황을 한눈에 파악하세요.")
-
     st.divider()
 
     if 'user_id' not in st.session_state:
@@ -46,21 +58,13 @@ def render_dashboard():
 
     df = df.rename(columns=reverse_mapping)
 
-    predictor = AttritionPredictor()
-
-    if '예측_퇴사확률' not in df.columns:
-        with st.spinner("AI가 전체 임직원의 퇴사 위험도를 분석하고 있습니다..."):
-            df['예측_퇴사확률'] = predictor.predict_dataframe(df)
-            df['위험군'] = df['예측_퇴사확률'].apply(lambda x: '고위험' if x> 0.4 else '안정')
+    with st.spinner("AI가 전체 임직원의 퇴사 위험도를 분석하고 있습니다..."):
+        df = get_predicted_data(df)
             
     #kpi 지표 계산
     total_emp = len(df)
     high_risk_emp = len(df[df['위험군'] == '고위험'])
     predicted_attrition_rate = (high_risk_emp / total_emp * 100) if total_emp > 0 else 0
-
-    #avg_tenure = df['현회사근속년수'].mean() if '현회사근속년수' in df.columns else (df['YearsAtCompany'].mean() if 'YearsAtCompany' in df.columns else 0)
-    #avg_income = df['월급'].mean() if '월급' in df.columns else (df['MonthlyIncome'].mean() if 'MonthlyIncome' in df.columns else 0)
-
 
     avg_tenure_col = '현회사근속년수' if '현회사근속년수' in df.columns else ('YearsAtCompany' if 'YearsAtCompany' in df.columns else ('years_at_company' if 'years_at_company' in df.columns else None))
     avg_income_col = '월급' if '월급' in df.columns else ('MonthlyIncome' if 'MonthlyIncome' in df.columns else ('monthly_income' if 'monthly_income' in df.columns else None))
@@ -107,30 +111,31 @@ def render_dashboard():
     with col_chart2:
         st.subheader("퇴사 주요 원인 분석(Global SHAP)")
 
-        if 'shap_fig' not in st.session_state:
-            with st.spinner("전체 데이터 SHAP 요인 분석 중..."):
-                try:
-                    shap_df = predictor.get_global_shap(df)
-                    
-                    fig = px.bar(
-                        shap_df, 
-                        x='중요도 (Impact)', 
-                        y='요인 (Feature)', 
-                        orientation='h',
-                        color='중요도 (Impact)', 
-                        color_continuous_scale='Reds', 
-                        text_auto='.3f' # 바 옆에 수치 표시
-                    )
-                    fig.update_layout(
-                        xaxis_title="퇴사 확률에 미치는 영향력",
-                        yaxis_title=None,
-                        showlegend=False,
-                        margin=dict(l=0, r=0, t=30, b=0)
-                    )
+        with st.spinner("SHAP 분석 중..."):
+            try:
+                df_for_shap = df.drop(columns=['예측_퇴사확률', '위험군'], errors='ignore')
+                shap_df = get_shap_data(df_for_shap)
+                
+                fig = px.bar(
+                    shap_df, 
+                    x='중요도 (Impact)', 
+                    y='요인 (Feature)', 
+                    orientation='h',
+                    color='중요도 (Impact)', 
+                    color_continuous_scale='Reds', 
+                    text_auto='.3f' # 바 옆에 수치 표시
+                )
+                fig.update_layout(
+                    xaxis_title="퇴사 확률에 미치는 영향력",
+                    yaxis_title=None,
+                    showlegend=False,
+                    margin=dict(l=0, r=0, t=30, b=0)
+                )
 
-                    st.session_state['shap_plotly_fig'] = fig
-                except Exception as e:
-                    st.error(f"SHAP 분석 중 오류가 발생했습니다: {e}")
+                
 
-        if 'shap_plotly_fig' in st.session_state:
-            st.plotly_chart(st.session_state['shap_plotly_fig'], use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True)
+            except Exception as e:
+                st.error(f"SHAP 분석 중 오류가 발생했습니다: {e}")
+
+        
