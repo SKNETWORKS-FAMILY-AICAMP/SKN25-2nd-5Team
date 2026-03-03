@@ -28,20 +28,6 @@ def render_optimization_page():
         st.info("등록된 직원 데이터가 없습니다. 먼저 직원 데이터를 등록해주세요.")
         return
     
-    '''
-    reverse_mapping = {
-        "name": "이름", "age": "나이", "business_travel": "출장빈도", "department": "부서",
-        "distance_from_home": "집과의거리", "education": "교육수준", "education_field": "전공분야",
-        "environment_satisfaction": "근무환경만족도", "gender": "성별", "job_involvement": "직무몰입도",
-        "job_level": "직급", "job_satisfaction": "직무만족도", "marital_status": "결혼상태",
-        "monthly_income": "월급", "num_companies_worked": "이전회사근무횟수", "overtime": "초과근무여부",
-        "percent_salary_hike": "급여인상률", "performance_rating": "성과평가등급",
-        "relationship_satisfaction": "대인관계만족도", "total_working_years": "총경력년수",
-        "work_life_balance": "워라밸수준", "years_at_company": "현회사근속년수",
-        "years_in_current_role": "현재직무근무년수", "years_since_last_promotion": "마지막승진후경과년수",
-        "job_role": "직무분류"
-    }
-    '''
     df = df.rename(columns=ENG_TO_KOR)
 
     st.subheader("1. 제약 조건 입력")
